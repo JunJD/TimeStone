@@ -14,7 +14,6 @@ export class AnyExceptionFilter implements ExceptionFilter<any> {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();
-
     // 如果异常中没有getStatus方法，说明不是HttpException，我们就手动设置状态码为500
     if (!('getStatus' in exception)) {
       this.handleNoGetStatus(request, response);

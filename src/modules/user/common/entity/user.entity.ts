@@ -8,15 +8,15 @@ export class User extends BaseEntity {
   })
   name: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   email: string;
 
-  @Column({ select: false })
+  @Column({ nullable: true, select: false })
   password: string;
 
-  @Column({
-    generated: 'uuid',
-  })
+  @Column()
   openId: string;
 
   // @Column({
