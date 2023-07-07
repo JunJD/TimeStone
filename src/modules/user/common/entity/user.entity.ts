@@ -1,7 +1,6 @@
 import { Column, Entity } from 'typeorm';
-import { BaseEntity } from '../../../common/base.entity';
 import { UserSetting } from './setting.entity';
-import { UserRole } from './user.type';
+import { BaseEntity } from 'src/common/base.entity';
 @Entity()
 export class User extends BaseEntity {
   @Column({
@@ -20,11 +19,11 @@ export class User extends BaseEntity {
   })
   openId: string;
 
-  @Column({
-    default: UserRole.user,
-    enum: UserRole,
-  })
-  role: UserRole;
+  // @Column({
+  //   default: UserRole.user,
+  //   enum: UserRole,
+  // })
+  // role: UserRole;
 
   userSettingList: UserSetting[];
 }

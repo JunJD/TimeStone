@@ -24,7 +24,7 @@ export class AnyExceptionFilter implements ExceptionFilter<any> {
     response?.status(exception.getStatus()).json({
       success: false,
       error: {
-        timestamp: new Date().toLocaleString(),
+        timestamp: new Date(),
         path: request.url,
         msg:
           exception.message.message ||
@@ -37,7 +37,7 @@ export class AnyExceptionFilter implements ExceptionFilter<any> {
   handleNoGetStatus(request, response) {
     response?.status(500).json({
       statusCode: 30001,
-      timestamp: new Date().toISOString(),
+      timestamp: new Date(),
       path: request.url,
       msg: '系统异常',
     });
