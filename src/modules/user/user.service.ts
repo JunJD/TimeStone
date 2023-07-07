@@ -13,8 +13,8 @@ export class UserService {
     private readonly settingRepo: Repository<UserSetting>,
   ) {}
 
-  getHello(): string {
-    console.log(this.userRepo.find());
+  async getHello(): Promise<string> {
+    console.log(await this.userRepo.find());
     return 'this.helloMessage';
   }
 }

@@ -15,7 +15,7 @@ fetch('https://run.dingjunjie.com/v1/chat/completions', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    authorization: 'Bearer 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',
+    authorization: 'Bearer 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',
   },
   body: JSON.stringify({
     model: 'gpt-3.5-turbo',

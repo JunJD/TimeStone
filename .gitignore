@@ -402,3 +402,4 @@ dist
 .vscode
 
 config/*
+study/*
