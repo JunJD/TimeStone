@@ -6,6 +6,7 @@ import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 import { UserModule } from './modules/user/user.module';
 import { CorsMiddleware } from './common/middlewares/cors.middlewares';
+import { AuthModule } from './modules/auth/auth.module';
 @Module({
   imports: [
     ConfigModule.register({ folder: './config' }),
@@ -28,6 +29,7 @@ import { CorsMiddleware } from './common/middlewares/cors.middlewares';
       inject: [ConfigService],
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
