@@ -26,7 +26,10 @@ export class UserService {
   async findOne(
     findUserDto: Pick<CreateUserDto, 'email'>,
   ): Promise<User | undefined> {
-    return await this.userRepo.findOne({ where: { email: findUserDto.email } });
+    return await this.userRepo.findOne({
+      where: { email: findUserDto.email },
+      select: ['password', 'email', 'name'],
+    });
   }
 
   async getAllUsers(): Promise<User[]> {

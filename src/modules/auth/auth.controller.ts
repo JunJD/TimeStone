@@ -1,13 +1,27 @@
-import { Post, Controller, Body, HttpException } from '@nestjs/common';
+import {
+  Post,
+  Controller,
+  Body,
+  HttpException,
+  HttpStatus,
+  HttpCode,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { User } from '../user/common/entity/user.entity';
 import { LoginAuthDto } from './dto/login-auth.dto';
+import { AuthService } from './auth.service';
+import { Public } from './decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
+  @Public()
+  @HttpCode(HttpStatus.OK)
   @Post('register')
   async signUp(@Body() createUserDto: CreateUserDto): Promise<User> {
     const user = await this.userService.findOne(
@@ -19,15 +33,10 @@ export class AuthController {
     return this.userService.createUser(createUserDto);
   }
 
+  @Public()
+  @HttpCode(HttpStatus.OK)
   @Post('login')
-  async signIn(@Body() loginAuthDto: LoginAuthDto): Promise<User> {
-    const user = await this.userService.findOne(
-      loginAuthDto as Pick<LoginAuthDto, 'email'>,
-    );
-    if (!user) {
-      throw new HttpException('用户不存在', 401);
-    }
-    return user;
-    // return this.userService.createUser(createUserDto);
+  async signIn(@Body() loginAuthDto: LoginAuthDto) {
+    return this.authService.signIn(loginAuthDto);
   }
 }
