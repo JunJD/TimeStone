@@ -13,7 +13,7 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "preinstall": "npx only-allow pnpm",
-    "postinstall": "npx patch-package -y & node study/index"
+    "postinstall": "npx patch-package -y"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
