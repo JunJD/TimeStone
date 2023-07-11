@@ -4,18 +4,29 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { CONFIG_OPTIONS } from './constants';
 import { ConfigOptions, EnvConfig } from './interfaces';
-
+import { config } from 'dotenv';
+config();
 @Injectable()
 export class ConfigService {
   private readonly envConfig: EnvConfig;
 
   constructor(@Inject(CONFIG_OPTIONS) options: ConfigOptions) {
-    const filePath = `${process.env.NODE_ENV || 'development'}.env`;
-    const envFile = path.resolve(__dirname, '../../', options.folder, filePath);
-    this.envConfig = dotenv.parse(fs.readFileSync(envFile));
+    try {
+      const filePath = `${process.env.NODE_ENV || 'development'}.env`;
+      const envFile = path.resolve(
+        __dirname,
+        '../../',
+        options.folder,
+        filePath,
+      );
+      this.envConfig = dotenv.parse(fs.readFileSync(envFile));
+    } catch (error) {
+      this.envConfig = {};
+    }
   }
 
   get(key: string): string {
-    return this.envConfig[key];
+    console.log(key, this.envConfig[key] === process.env[key]);
+    return this.envConfig[key] ?? process.env[key];
   }
 }
