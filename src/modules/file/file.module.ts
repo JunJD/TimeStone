@@ -1,21 +1,24 @@
 import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { FileController } from './file.controller';
 import { FileService } from './file.service';
+import { exitsFolder } from 'src/utils/dir';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { File } from './common/entity/file.entity';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([File]),
     MulterModule.register({
       storage: diskStorage({
-        destination: './uploads', // 指定上传文件的存储路径
-        filename: (req, file, callback) => {
-          const randomName = Array(32)
-            .fill(null)
-            .map(() => Math.round(Math.random() * 16).toString(16))
-            .join('');
-          return callback(null, `${randomName}${extname(file.originalname)}`);
+        destination: async function (req, file, cb) {
+          cb(null, await exitsFolder('./data/resource/'));
+        },
+        filename: function (req, file, cb) {
+          const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          cb(null, file.fieldname + '-' + uniqueSuffix);
         },
       }),
     }),

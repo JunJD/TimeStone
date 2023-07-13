@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="file" name="upload" id="upload" />
+    <button>tijiao</button>
+  </body>
+  <script>
+    const formNode = document.querySelector('button');
+    const inputNode = document.querySelector('input');
+    formNode.addEventListener('click', (e) => {
+      //   e.stopPropagation();
+      //   e.defaultPrevented();
+      console.dir(inputNode.files[0]);
+      const formData = new FormData();
+      formData.append('file', inputNode.files[0]);
+      // 创建XMLHttpRequest对象
+      const xhr = new XMLHttpRequest();
+
+      // 设置请求方法和URL
+      xhr.open('POST', 'http://localhost:7182/file/upload', true);
+
+      // 设置请求头，如果需要的话
+      // xhr.setRequestHeader('header_key', 'header_value');
+
+      // 监听请求完成事件
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // 请求成功，处理返回结果
+          console.log(xhr.responseText);
+        } else {
+          // 请求失败，处理错误
+          console.log('Error:', xhr.status);
+        }
+      };
+
+      // 设置Authorization Bearer令牌请求头
+      const token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJkaW5nanVuamllQHFxLmNvbSIsInN1YiI6ImRpbmdqdW5qaWUiLCJpYXQiOjE2ODkyNjAwMzIsImV4cCI6MTY5MTg1MjAzMn0.Wl0C6Cz-M476To_VnF8Qwlte_hFnyVgbo8xNwhvjwbA';
+      xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+      // 发送请求
+      xhr.send(formData);
+    });
+  </script>
+</html>

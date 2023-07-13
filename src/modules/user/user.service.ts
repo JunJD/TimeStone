@@ -20,7 +20,7 @@ export class UserService {
     user.name = createUserDto.name ?? '-';
     user.openId = '-';
     const hashPassword = await this.generatePassword(createUserDto.password);
-    console.log(hashPassword);
+
     user.password = hashPassword;
     return await this.userRepo.save(user);
   }
@@ -30,7 +30,7 @@ export class UserService {
   ): Promise<User | undefined> {
     return await this.userRepo.findOne({
       where: { email: findUserDto.email },
-      select: ['password', 'email', 'name'],
+      select: ['id', 'password', 'email', 'name'],
     });
   }
 

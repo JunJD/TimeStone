@@ -3,6 +3,7 @@ import {
   Post,
   UseInterceptors,
   UploadedFile,
+  Req,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
@@ -16,8 +17,9 @@ export class FileController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file) {
-    await this.fileService.createFile(file);
+  async uploadFile(@UploadedFile() file, @Req() req) {
+    const user = req.user;
+    await this.fileService.createFile(file, user);
     // 处理上传的文件
   }
 }

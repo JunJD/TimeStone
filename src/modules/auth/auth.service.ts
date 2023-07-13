@@ -22,7 +22,7 @@ export class AuthService {
     }
     const user = await this.userService.createUser(createUserDto);
 
-    const payload = { username: user?.email, sub: user?.name };
+    const payload = { id: user.id, username: user?.email, sub: user?.name };
 
     return {
       ...payload,
@@ -47,7 +47,7 @@ export class AuthService {
       throw new HttpException('密码错误', 401);
     }
 
-    const payload = { username: user.email, sub: user.name };
+    const payload = { id: user.id, username: user.email, sub: user.name };
 
     return {
       ...payload,
