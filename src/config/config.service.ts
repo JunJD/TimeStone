@@ -26,7 +26,6 @@ export class ConfigService {
   }
 
   get(key: string): string {
-    console.log(key, this.envConfig[key] === process.env[key]);
     return this.envConfig[key] ?? process.env[key];
   }
 }

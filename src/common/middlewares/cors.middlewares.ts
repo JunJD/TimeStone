@@ -9,6 +9,7 @@ import {
   HttpStatus,
   RequestMethod,
 } from '@nestjs/common';
+import { Request, Response } from 'express';
 
 /**
  * @class CorsMiddleware
@@ -16,8 +17,7 @@ import {
  */
 @Injectable()
 export class CorsMiddleware implements NestMiddleware {
-  use(request: any, response: any, next: (error?: any) => void) {
-    // console.log('12112')
+  use(request: Request, response: Response, next: () => void) {
     const getMethod = (method) => RequestMethod[method];
     const origin = request.headers.origin || '';
     // const allowedOrigins = [];

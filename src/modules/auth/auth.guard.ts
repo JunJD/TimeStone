@@ -35,7 +35,7 @@ export class AuthGuard implements CanActivate {
         secret: jwtConstants.secret,
       });
       // 这里我们将负载分配给请求对象
-      //这样我们可以在我们的路由处理程序中访问它
+      // 这样我们可以在我们的路由处理程序中访问它
       request['user'] = payload;
     } catch {
       throw new HttpException('未授权', 401);

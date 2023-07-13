@@ -7,6 +7,8 @@ const generateJwtSecret = (length: number) => {
 
 const jwtSecret = generateJwtSecret(32);
 
+console.warn('jwtSecret==>', jwtSecret);
+
 export const jwtConstants = {
   secret: jwtSecret,
 };

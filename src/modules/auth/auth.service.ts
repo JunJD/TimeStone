@@ -1,6 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { LoginAuthDto } from './dto/login-auth.dto';
-
+import * as bcrypt from 'bcrypt';
 import { HttpException, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
@@ -39,8 +39,11 @@ export class AuthService {
     if (user === null) {
       throw new HttpException('用户不存在', 401);
     }
-
-    if (user?.password !== loginAuthDto.password) {
+    const passwdValid = await bcrypt.compare(
+      loginAuthDto?.password,
+      user?.password,
+    );
+    if (!passwdValid) {
       throw new HttpException('密码错误', 401);
     }
 

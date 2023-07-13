@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './common/entity/user.entity';
@@ -15,7 +15,9 @@ export class UserController {
   @Post('profile')
   getProfile(
     @Body() findUserDto: Pick<CreateUserDto, 'email'>,
+    @Req() req,
   ): Promise<User | undefined> {
+    console.log(req.user, 'req');
     return this.userService.findOne(findUserDto);
   }
 }
