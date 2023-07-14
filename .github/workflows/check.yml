@@ -19,9 +19,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "${{ env.node_version }}"
+      - name: Install pnpm
+        run: npm install pnpm -g
       - name: Install dependencies
-        run: pnpm install
+        run: npx pnpm install
       - name: Lint check
-        run: pnpm lint
+        run: npx pnpm lint
       - name: Format check
-        run: pnpm format
+        run: npx pnpm format
