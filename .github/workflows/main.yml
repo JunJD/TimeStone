@@ -1,0 +1,19 @@
+name: Code Review
+permissions:
+  contents: read
+  pull-requests: write
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: anc95/ChatGPT-CodeReview@main
+        env:
+          GITHUB_TOKEN: "${{ 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}}"
+          OPENAI_API_KEY: "${{ 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 }}"
+          OPENAI_API_ENDPOINT: https://run.dingjunjie.com
