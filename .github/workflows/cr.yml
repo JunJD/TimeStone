@@ -1,4 +1,10 @@
 name: Code Review
+
+on:
+  push:
+    branches:
+      - main
+      - master
 permissions:
   contents: read
   pull-requests: write
