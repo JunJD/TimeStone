@@ -17,7 +17,6 @@ export class UserController {
     @Body() findUserDto: Pick<CreateUserDto, 'email'>,
     @Req() req,
   ): Promise<User | undefined> {
-    console.log(req.user, 'req');
     return this.userService.findOne(findUserDto);
   }
 }
