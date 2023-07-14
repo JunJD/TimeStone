@@ -31,6 +31,6 @@ async function bootstrap() {
   app.useGlobalFilters(new AnyExceptionFilter());
 
   await app.listen(7182);
-  console.log(`应用程序运行在: ${await app.getUrl()}`);
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
