@@ -57,7 +57,7 @@ export class AuthController {
     if (this.verificationCodeMap.has(dto.email)) {
       const { verificationCode: storedCode, storedTimestamp } =
         this.verificationCodeMap.get(dto.email);
-
+      this.verificationCodeMap.delete(dto.email);
       if (
         dto.code === storedCode &&
         currentTime <= storedTimestamp + expirationTime
