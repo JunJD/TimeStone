@@ -6,11 +6,39 @@ import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { UserModule } from '../user/user.module';
 import { jwtConstants } from './constants';
+import { EmailModule, EmailOptions } from '../email/email.module';
+import { config } from 'dotenv';
+config();
+const emailOptions: EmailOptions = {
+  RapidAPIKey: process.env.EMAIL_RapidAPI_Key,
+  RapidAPIHost: process.env.EMAIL_RapidAPI_Host,
+  personalizations: [
+    {
+      to: [
+        {
+          name: 'Ding',
+          email: '864546065@qq.com',
+        },
+      ],
+      subject: 'timeStone注册校验',
+    },
+  ],
+  from: {
+    email: 'auth@timeStone.com',
+  },
+  content: [
+    {
+      type: 'text/plain',
+      value: '908212',
+    },
+  ],
+};
 
 // 全局模块
 @Module({
   imports: [
     UserModule,
+    EmailModule.forRoot(emailOptions),
     // 导入jwt模块,并配置,global: true表示全局模块,所有模块都可以使用
     JwtModule.register({
       global: true,

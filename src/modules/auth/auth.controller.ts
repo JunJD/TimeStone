@@ -4,12 +4,14 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
+import { EmailService } from '../email/email.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
+    private readonly emailService: EmailService,
   ) {}
 
   @Public()
@@ -23,6 +25,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async signIn(@Body() loginAuthDto: LoginAuthDto) {
+    console.log(await this.emailService.sendEmail());
     return this.authService.signIn(loginAuthDto);
   }
 }
