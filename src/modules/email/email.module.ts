@@ -5,20 +5,7 @@ import { HttpModule } from '@nestjs/axios';
 export interface EmailOptions {
   RapidAPIKey: string;
   RapidAPIHost: string;
-  personalizations: {
-    to: {
-      name: string;
-      email: string;
-    }[];
-    subject: string;
-  }[];
-  from: {
-    email: string;
-  };
-  content: {
-    type: string;
-    value: string;
-  }[];
+  formEmail: string;
 }
 
 @Module({

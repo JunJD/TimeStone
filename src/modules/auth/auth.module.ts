@@ -12,26 +12,7 @@ config();
 const emailOptions: EmailOptions = {
   RapidAPIKey: process.env.EMAIL_RapidAPI_Key,
   RapidAPIHost: process.env.EMAIL_RapidAPI_Host,
-  personalizations: [
-    {
-      to: [
-        {
-          name: 'Ding',
-          email: '864546065@qq.com',
-        },
-      ],
-      subject: 'timeStone注册校验',
-    },
-  ],
-  from: {
-    email: 'auth@timeStone.com',
-  },
-  content: [
-    {
-      type: 'text/plain',
-      value: '908212',
-    },
-  ],
+  formEmail: 'auth@timeStone.com',
 };
 
 // 全局模块
