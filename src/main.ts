@@ -25,6 +25,8 @@ async function bootstrap() {
    */
   app.useGlobalInterceptors(new TransformInterceptor());
 
+  add some bug to test code review
+
   /**
    * 3. 异常过滤, 报错catch并透出
    */
