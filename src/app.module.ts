@@ -9,6 +9,19 @@ import { CorsMiddleware } from './common/middlewares/cors.middlewares';
 import { AuthModule } from './modules/auth/auth.module';
 import { FileModule } from './modules/file/file.module';
 import { OrderModule } from './modules/order/order.module';
+import { PayModule, PayOption } from './modules/pay/pay.module';
+import { config } from 'dotenv';
+import AlipaySdk from 'alipay-sdk';
+config();
+const payOption: PayOption = {
+  appId: process.env.ALIPAY_APP_ID,
+  privateKey: process.env.ALIPAY_PRIVATE_KEY,
+  alipayPublicKey: process.env.ALIPAY_PUBLIC_KEY,
+  gateway: process.env.GATEWAY,
+};
+
+const alipaySdk = new AlipaySdk(payOption); // 初始化alipay 支付
+
 @Module({
   imports: [
     ConfigModule.register({ folder: './config' }),
@@ -33,6 +46,7 @@ import { OrderModule } from './modules/order/order.module';
     UserModule,
     AuthModule,
     FileModule,
+    PayModule.forRootByAliPay(alipaySdk),
     OrderModule,
   ],
   controllers: [AppController],

@@ -1,12 +1,22 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsDate, IsEnum, IsNumber, IsString } from 'class-validator';
+import { OrderStatus, PaymentStatus } from '../common/types/status';
 
 export class CreateOrderDto {
   @IsNumber()
   readonly totalPrice: number;
 
-  @IsString()
-  readonly status: string;
+  @IsEnum(OrderStatus)
+  readonly status: OrderStatus;
 
   @IsString()
   readonly tokenAmount: number;
+
+  @IsString()
+  readonly paymentMethod: string;
+
+  @IsEnum(PaymentStatus)
+  readonly paymentStatus: PaymentStatus;
+
+  @IsDate()
+  readonly paymentDate?: Date;
 }
