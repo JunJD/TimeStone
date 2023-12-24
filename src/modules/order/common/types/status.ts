@@ -11,3 +11,7 @@ export enum PaymentStatus {
   Cancelled = 'Cancelled',
   // 可以根据需要添加更多状态
 }
+
+export enum PaymentMethod {
+  AliPay = 'alipay',
+}

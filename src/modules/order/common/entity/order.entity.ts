@@ -7,6 +7,9 @@ export class Order extends BaseEntity {
   @Column()
   orderId: string;
 
+  @Column()
+  subject: string;
+
   @ManyToOne(() => User, (user) => user.orders)
   user: User;
 

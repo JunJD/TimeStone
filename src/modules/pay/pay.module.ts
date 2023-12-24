@@ -4,6 +4,7 @@ import { PayService } from './pay.service';
 import { OrderModule } from '../order/order.module';
 import { ConfigModule } from 'src/config/config.module';
 import AlipaySdk from 'alipay-sdk';
+import { ALI_PAY_SDK_PROVIDER } from './common/constants';
 
 export interface PayOption {
   appId: string;
@@ -25,7 +26,7 @@ export class PayModule {
       module: PayModule,
       providers: [
         {
-          provide: 'ALI_PAY_SDK',
+          provide: ALI_PAY_SDK_PROVIDER,
           useValue: alipaySdk,
         },
         PayService,

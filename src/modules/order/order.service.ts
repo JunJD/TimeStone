@@ -22,6 +22,8 @@ export class OrderService {
     order.paymentStatus = createOrderDto.paymentStatus;
     order.paymentDate = createOrderDto?.paymentDate;
     order.orderId = generateOrderId();
+    order.subject =
+      createOrderDto.subject ?? `支付购买${createOrderDto.tokenAmount}token`;
 
     return await this.orderRepo.save(order);
   }

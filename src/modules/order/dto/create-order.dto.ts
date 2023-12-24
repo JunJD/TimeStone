@@ -19,4 +19,7 @@ export class CreateOrderDto {
 
   @IsDate()
   readonly paymentDate?: Date;
+
+  @IsString()
+  readonly subject?: string;
 }
