@@ -7,8 +7,8 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { jwtConstants } from './constants';
-import { IS_PUBLIC_KEY } from './decorators/public.decorator';
+import { UserRole, jwtConstants } from './constants';
+import { IS_PUBLIC_KEY, ROLES_KEY } from './decorators/public.decorator';
 
 // 用于验证请求的守卫
 @Injectable()
@@ -27,6 +27,7 @@ export class AuthGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
+    console.log(token, 'token');
     if (!token) {
       throw new HttpException('未授权', 401);
     }
@@ -47,5 +48,25 @@ export class AuthGuard implements CanActivate {
   private extractTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
+  }
+}
+
+@Injectable()
+export class RolesGuard implements CanActivate {
+  constructor(private reflector: Reflector) {}
+
+  canActivate(context: ExecutionContext): boolean {
+    const requiredRoles = this.reflector.get<UserRole[]>(
+      ROLES_KEY,
+      context.getHandler(),
+    );
+    console.log('requiredRoles==>', requiredRoles);
+    if (!requiredRoles) {
+      return true;
+    }
+    const request = context.switchToHttp().getRequest();
+    const user = request.user;
+    console.log('user==>', user);
+    return requiredRoles.some((role) => user.roles?.includes(role));
   }
 }

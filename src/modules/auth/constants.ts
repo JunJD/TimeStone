@@ -12,3 +12,9 @@ console.warn('jwtSecret==>', jwtSecret);
 export const jwtConstants = {
   secret: jwtSecret,
 };
+
+export enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+  // 其他角色...
+}

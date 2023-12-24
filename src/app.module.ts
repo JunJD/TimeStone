@@ -8,6 +8,7 @@ import { UserModule } from './modules/user/user.module';
 import { CorsMiddleware } from './common/middlewares/cors.middlewares';
 import { AuthModule } from './modules/auth/auth.module';
 import { FileModule } from './modules/file/file.module';
+import { OrderModule } from './modules/order/order.module';
 @Module({
   imports: [
     ConfigModule.register({ folder: './config' }),
@@ -32,6 +33,7 @@ import { FileModule } from './modules/file/file.module';
     UserModule,
     AuthModule,
     FileModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
