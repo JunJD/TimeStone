@@ -17,32 +17,14 @@ export class EmailService {
     name?: CreateUserDto['name'],
   ) {
     const verificationCode = this.generateVerificationCode();
-    const _emailOptions = {
-      RapidAPIKey: process.env.EMAIL_RapidAPI_Key,
-      RapidAPIHost: process.env.EMAIL_RapidAPI_Host,
-      personalizations: [
-        {
-          to: [
-            {
-              name: name ?? email,
-              email: email,
-            },
-          ],
-          subject: type,
-        },
-      ],
-      from: {
-        email: this.emailOptions.formEmail,
-      },
-      content: [
-        {
-          type: 'text/plain',
-          value: `你的验证码是：${verificationCode}`,
-        },
-      ],
+    const data = {
+      ishtml: 'false',
+      sendto: email,
+      title: name,
+      body: `${verificationCode}`,
     };
     // 使用 this.emailOptions 进行邮件发送逻辑
-    const url = 'https://rapidprod-sendgrid-v1.p.rapidapi.com/mail/send';
+    const url = 'https://rapidmail.p.rapidapi.com/';
 
     const headers = {
       'Content-Type': 'application/json',
@@ -56,7 +38,7 @@ export class EmailService {
 
     try {
       const response = await firstValueFrom(
-        this.httpService.post(url, _emailOptions, config),
+        this.httpService.post(url, data, config),
       );
 
       return { ...response.data, verificationCode };
@@ -76,6 +58,6 @@ export class EmailService {
       );
     }
 
-    return verificationCode;
+    return verificationCode + '';
   }
 }

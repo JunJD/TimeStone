@@ -1,5 +1,6 @@
-import { IsDate, IsEnum, IsNumber, IsString } from 'class-validator';
+import { IsDate, IsEnum, IsNumber, IsObject, IsString } from 'class-validator';
 import { OrderStatus, PaymentStatus } from '../common/types/status';
+import { User } from 'src/modules/user/common/entity/user.entity';
 
 export class CreateOrderDto {
   @IsNumber()
@@ -22,4 +23,7 @@ export class CreateOrderDto {
 
   @IsString()
   readonly subject?: string;
+
+  @IsObject()
+  readonly user: User;
 }

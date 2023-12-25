@@ -15,6 +15,7 @@ import {
   TRADE_QUERY_PAY,
   TRADE_STATUS,
 } from './common/constants';
+import { User } from '../user/common/entity/user.entity';
 
 @Injectable()
 export class PayService {
@@ -26,8 +27,10 @@ export class PayService {
   }
   async pay(
     aliPayDto: AliPayDto,
+    req: Request,
     paymentMethod = PaymentMethod.AliPay,
   ): Promise<Order> {
+    console.log('req', (req as unknown as { user: User }).user, 'end');
     // 创建一个订单
     const order = await this.orderService.createOrder({
       totalPrice: aliPayDto.totalAmount,
@@ -36,6 +39,7 @@ export class PayService {
       tokenAmount: aliPayDto.tokenAmount,
       paymentMethod,
       subject: aliPayDto.subject,
+      user: (req as unknown as { user: User }).user,
     });
 
     if (paymentMethod === PaymentMethod.AliPay) {

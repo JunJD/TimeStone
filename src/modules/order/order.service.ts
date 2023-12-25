@@ -24,7 +24,7 @@ export class OrderService {
     order.orderId = generateOrderId();
     order.subject =
       createOrderDto.subject ?? `支付购买${createOrderDto.tokenAmount}token`;
-
+    order.user = createOrderDto.user;
     return await this.orderRepo.save(order);
   }
 
