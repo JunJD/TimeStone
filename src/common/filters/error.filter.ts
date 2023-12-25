@@ -18,7 +18,13 @@ export class AnyExceptionFilter implements ExceptionFilter<any> {
     console.log(exception, 'exception');
 
     if (!('getStatus' in exception)) {
+      console.log("'getStatus' in exception");
       this.handleNoGetStatus(request, response);
+      return;
+    }
+
+    if ('response' in exception && exception.response.message) {
+      this.handleGlobalPipes(request, response, exception);
       return;
     }
     // 如果是HttpException，我们就调用getStatus方法获取状态码
@@ -28,9 +34,10 @@ export class AnyExceptionFilter implements ExceptionFilter<any> {
         timestamp: new Date(),
         path: request.url,
         msg:
-          exception.message.message ||
-          exception.message.error ||
+          exception.message?.message ||
+          exception.message?.error ||
           exception.message,
+        errormeta: { ...exception },
       },
     });
   }
@@ -41,6 +48,15 @@ export class AnyExceptionFilter implements ExceptionFilter<any> {
       timestamp: new Date(),
       path: request.url,
       msg: '系统异常',
+    });
+  }
+
+  handleGlobalPipes(request, response, exception) {
+    response?.status(exception.response.statusCode).json({
+      statusCode: 30002,
+      timestamp: new Date(),
+      path: request.url,
+      msg: exception.response.message,
     });
   }
 }

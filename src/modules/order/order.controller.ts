@@ -6,7 +6,7 @@ import { Public } from '../auth/decorators/public.decorator';
 // import { CreateOrderDto } from './dto/create-order.dto';
 import { Order } from './common/entity/order.entity';
 
-@Controller('Order')
+@Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 

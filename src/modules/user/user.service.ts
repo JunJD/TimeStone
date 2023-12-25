@@ -35,7 +35,7 @@ export class UserService {
   }
 
   async getAllUsers(): Promise<User[]> {
-    return await this.userRepo.find();
+    return await this.userRepo.find({ relations: ['orders'] });
   }
 
   async generatePassword(passwd: string) {

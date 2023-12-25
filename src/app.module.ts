@@ -12,6 +12,8 @@ import { OrderModule } from './modules/order/order.module';
 import { PayModule, PayOption } from './modules/pay/pay.module';
 import { config } from 'dotenv';
 import AlipaySdk from 'alipay-sdk';
+import { AssistantModule } from './modules/assistant/assistant.module';
+import { SessionModule } from './modules/session/session.module';
 config();
 const payOption: PayOption = {
   appId: process.env.ALIPAY_APP_ID,
@@ -43,11 +45,13 @@ const alipaySdk = new AlipaySdk(payOption); // 初始化alipay 支付
       }),
       inject: [ConfigService],
     }),
-    UserModule,
-    AuthModule,
-    FileModule,
-    PayModule.forRootByAliPay(alipaySdk),
-    OrderModule,
+    UserModule, // 用户
+    AuthModule, // 权限
+    FileModule, // 文件
+    PayModule.forRootByAliPay(alipaySdk), // 支付
+    OrderModule, // 订单
+    AssistantModule, // 助理设定
+    SessionModule, // 上下文
   ],
   controllers: [AppController],
   providers: [AppService],
