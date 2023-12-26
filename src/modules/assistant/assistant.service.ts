@@ -10,6 +10,9 @@ export class AssistantService {
     private readonly assistantRepo: Repository<Assistant>,
   ) {}
   async getAllAssistants() {
-    return await this.assistantRepo.find();
+    return this.assistantRepo.find();
+  }
+  async createAssistant(assistant: Partial<Assistant>): Promise<Assistant> {
+    return await this.assistantRepo.save(assistant);
   }
 }
