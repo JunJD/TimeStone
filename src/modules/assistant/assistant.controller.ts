@@ -1,12 +1,9 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { AssistantService } from './assistant.service';
-
 import { Public } from '../auth/decorators/public.decorator';
-
-// import { CreateOrderDto } from './dto/create-order.dto';
 import { Assistant } from './common/entity/assistant.entity';
 import { CreateAssistantDto } from './dto/create-assistant.dto';
-import { User } from '../user/common/entity/user.entity';
+import { authRequest } from 'src/common/types/authRequest.types';
 
 @Controller('assistant')
 export class AssistantController {
@@ -21,12 +18,12 @@ export class AssistantController {
   @Post('create')
   async createAssistant(
     @Body() createAssistantDto: CreateAssistantDto,
-    @Req() req: Request,
+    @Req() req: authRequest,
   ): Promise<Assistant> {
     return await this.assistantService.createAssistant({
       ...createAssistantDto,
       tags: createAssistantDto.tags.map((item) => item.name).join(','),
-      user: (req as unknown as { user: User }).user,
+      user: req.user,
     });
   }
 }
