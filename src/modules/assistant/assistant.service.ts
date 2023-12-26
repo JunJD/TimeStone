@@ -15,4 +15,9 @@ export class AssistantService {
   async createAssistant(assistant: Partial<Assistant>): Promise<Assistant> {
     return await this.assistantRepo.save(assistant);
   }
+  async getAssistantById(assistantId: Assistant['id']) {
+    return await this.assistantRepo.findOne({
+      where: { id: assistantId },
+    });
+  }
 }
