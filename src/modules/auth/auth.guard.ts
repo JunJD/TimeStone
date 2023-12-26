@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { UserRole, jwtConstants } from './constants';
 import { IS_PUBLIC_KEY, ROLES_KEY } from './decorators/public.decorator';
+import { payloadDev } from './common/local';
 
 // 用于验证请求的守卫
 @Injectable()
@@ -26,8 +27,15 @@ export class AuthGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest();
+
+    if (process.env.NODE_ENV === 'development') {
+      // 开发环境
+      request['user'] = payloadDev;
+      return true;
+    }
+
     const token = this.extractTokenFromHeader(request);
-    console.log(token, 'token');
+
     if (!token) {
       throw new HttpException('未授权', 401);
     }
