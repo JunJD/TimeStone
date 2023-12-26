@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Req } from '@nestjs/common';
 import { AssistantService } from './assistant.service';
 import { Public } from '../auth/decorators/public.decorator';
 import { Assistant } from './common/entity/assistant.entity';
@@ -25,5 +25,12 @@ export class AssistantController {
       tags: createAssistantDto.tags.map((item) => item.name).join(','),
       user: req.user,
     });
+  }
+
+  @Delete('delete')
+  async deleteAssistant(@Body() deleteAssistantDto: { id: Assistant['id'] }) {
+    return await this.assistantService.deleteAssistantById(
+      deleteAssistantDto.id,
+    );
   }
 }

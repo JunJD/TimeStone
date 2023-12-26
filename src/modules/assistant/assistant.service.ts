@@ -20,4 +20,8 @@ export class AssistantService {
       where: { id: assistantId },
     });
   }
+
+  async deleteAssistantById(assistantId: Assistant['id']) {
+    return await this.assistantRepo.delete(assistantId);
+  }
 }

@@ -8,7 +8,7 @@ export class Assistant extends BaseEntity {
   @ManyToOne(() => User, (user) => user.assistants)
   user: User;
 
-  @Column({ default: '-' })
+  @Column({ default: '暂无描述' })
   description: string;
 
   @Column()
@@ -20,7 +20,7 @@ export class Assistant extends BaseEntity {
   @Column({ default: '-' })
   title: string;
 
-  @Column({ default: '系统描述' })
+  @Column({ default: '' })
   systemRole: string;
 
   @Column({ default: 'gpt-3.5-turbo-16k' })

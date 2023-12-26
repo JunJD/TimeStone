@@ -22,4 +22,10 @@ export class SessionService {
     const assistant = await this.assistantService.getAssistantById(assistantId);
     return await this.sessionRepo.save({ ...session, assistant });
   }
+  async deleteSessionById(sessionId: Session['id']) {
+    return await this.sessionRepo.delete(sessionId);
+  }
+  async updateSessionById(session: Partial<Session>) {
+    return await this.sessionRepo.update(session.id, session);
+  }
 }
